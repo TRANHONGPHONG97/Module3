@@ -5,10 +5,10 @@ VALUES  (1, 'Minh Quan', 10),
 		(2, 'Ngoc Oanh', 20),
         (3, 'Hong Ha', 50);
 
-INSERT INTO orders(oID, cID, oDate)
-VALUES 	(1,1,'2006-3-21'),
-		(2,2,'2006-3-23'),
-		(3,1,'2006-3-16');
+INSERT INTO orders(oID, cID, oDate, oToTalPrice)
+VALUES 	(1,1,'2006-3-21', null),
+		(2,2,'2006-3-23', null),
+		(3,1,'2006-3-16', null);
         
 INSERT INTO Product
 VALUES 	(1,'May Giat', 3),
