@@ -87,7 +87,9 @@ CALL allProducts();
 
 -- tạo store procedure sửa thông tin sản phẩm theo id
 DELIMITER //
-CREATE PROCEDURE editProduct(id_edit INT, 
+drop procedure if exists demo.editProduct;
+CREATE PROCEDURE editProduct(
+id_edit INT, 
 productsCode int, 
 productsName varchar(50), 
 productsPrice double, 
@@ -97,16 +99,18 @@ productsStatus varchar(50))
 BEGIN
 UPDATE Products
 SET
-productsCode = productCode, 
-productsName = productName, 
-productsPrice = productPrice, 
-productsAmount = productAmount, 
-productsDescription = productDescription, 
-productsStatus = productStatus
+Id = id_edit,
+productCode = productsCode, 
+productName = productsName, 
+productPrice = productsPrice, 
+productAmount = productsAmount, 
+productDescription = productsDescription, 
+productStatus = productsStatus
 WHERE Id = id_edit;
 END //
 DELIMITER ;
 CALL editProduct(4, 8, 'chè dừa', 20000, 20, 'dở', 'lạnh');
+select * from products;
 
 -- Tạo store procedure xóa thông tin sản phẩm theo id
 DELIMITER //
