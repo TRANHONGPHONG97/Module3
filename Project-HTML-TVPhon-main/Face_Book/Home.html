@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href=".//assets/fontawesome-free-6.0.0-web/css/all.min.css">
+    <link rel="stylesheet" href=".//assets/css/Home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <div class="container">
+        <div class="container--left">
+           <div class="container--left--center">
+                <div class="container--left--center--title">
+                    <h1>facebook</h1>
+                    <h2>Đăng nhập gần đây</h2>
+                    <p>Nhấp vào ảnh của bạn hoặc thêm tài khoản</p>
+                </div>
+                <div class="container--left--center--img">
+                    <div class="container--left--center--img--left" onclick="Show_info()">
+                        <a href="#">
+                            <img src=".//assets/img/abc.jpg" alt="">
+                            <i class="fa-solid fa-xmark"></i>
+                            <span>Phôn</span>
+                        </a>
+                    </div>
+                    <div class="container--left--center--img--right" onclick="Show()">
+                        <a href="#" id="add--acount">
+                            <div class="container--left--center--img--right--add">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                            <span>Thêm tài khoản</span>
+                        </a>
+                    </div>
+                </div>
+           </div>
+        </div>
+        <div class="container--right">
+            <div class="container--right--form">
+                <form action="">
+                    <input type="text" placeholder="Email hoặc số điện thoại">
+                    <input type="text" placeholder="Mật khẩu">
+                    <button type="button">Đăng nhập</button>
+                    <a href="#">Quên mật khẩu?</a>
+                    <button type="button">Tạo tài khoản mới</button>
+                </form>
+            </div>
+            <div class="container--right--note">
+                <p><span>Tạo Trang</span> dành cho người nổi tiếng, thương hiệu hoặc doanh nghiệp</p>
+            </div>
+        </div>
+    </div>
+    <div class="info" id="abc">
+        <div class="info--login">
+            <form action="">
+                <a href="#" onclick="Screen_off()"><i class="fa-solid fa-xmark"></i></a>
+                <p class="para--title">Đăng nhập Facebook<p>
+                <input type="text" placeholder="Email hoặc số điện thoại">
+                <input type="text" placeholder="Mật khẩu">
+                <p><input type="checkbox" class="input--check"><label for="">Nhớ mật khẩu</label></p>
+                <button type="button">Đăng nhập</button>
+                <a href="#">Quên mật khẩu?</a>
+            </form>
+        </div>
+    </div>
+    <div class="full--screen" id="cdf">
+        
+    </div>
+    <div class="info--user" id="phon">
+        <form action="">
+            <a href="#" onclick="Info_off()"><i class="fa-solid fa-xmark"></i></a>
+            <div class="info--user--img">
+                <img src=".//assets/img/abc.jpg" alt="">
+                <span>Trương Văn Phôn</span>
+            </div>
+            <div class="info--user--input">
+                <input type="text" placeholder="Mật khẩu" class="info--user--input--pass">
+                <p><input type="checkbox"><label for="">Nhớ mật khẩu</label></p>
+                <button type="button">Đăng nhập</button>
+                <a href="#">Quên mật khẩu</a>
+            </div>
+        </form>
+    </div>
+    <script src=".//Home.js"></script>
+</body>
+</html>

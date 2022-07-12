@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<style>
+    ul.menu {
+        /* bỏ dấu tròn ở trước */
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        background-color: grey;
+        justify-content: start;
+    }
+
+    nav>ul.menu {
+        display: flex;
+    }
+
+    ul.menu>li {
+        max-width: 200px;
+        /* padding: 30px; */
+        border-right: 1px solid white;
+    }
+
+    ul.menu>li>a {
+        /* bỏ phần gạch chân */
+        text-decoration: none;
+        display: block;
+        padding: 20px;
+        color: darkgoldenrod;
+    }
+
+    ul.menu>li>a:hover {
+        background-color: blue;
+        color: white;
+    }
+
+    .dangky {
+        margin-left: auto;
+    }
+
+    .subcontent {
+        /* ẩn menu con đi */
+        display: none;
+    }
+
+    .sub:hover .subcontent {
+        /* hover lên thì hiện ra lại */
+        display: block;
+        position: absolute;
+    }
+</style>
+
+<body>
+
+    <nav class="animate__animated animate__bounce">
+        <ul class="menu">
+            <li><a href="https://www.facebook.com/huynhthi.phuongngan">Trang chủ</a></li>
+            <li class="sub">
+                <a href="#">Môn học</a>
+                <ul class="menu subcontent">
+                    <li><a href="#">JAVA</a></li>
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Liên hệ</a></li>
+            <li class="dangky"><a href="#">Đăng ký</a></li>
+            <li><a href="#">Đăng nhập</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>GIỚI THIỆU VỀ NGÂN LẠNH LÙNG</h1>
+        <p> =>>> Người chi mà lạnh lùng dữ!!! SOS</p>
+        <hr size="2" width="5%" color="black" />
+    </header>
+    <section class="ngans">
+        <div class="ngan">
+            <img src="image/Hiiiiiiiiiiiiii.png" alt="ngann">
+            <div>
+                <h2>Ngân bếu :))</h2>
+                <p>Ngân hay cọc với dỗi ...</p>
+            </div>
+        </div>
+        <div class="ngan">
+            <img src="image/ngân cute.jpg" alt="ngann">
+            <div>
+                <h2>Ngân bếu :))</h2>
+                <p>Ngân hay cọc với dỗi ...</p>
+            </div>
+        </div>
+        <div class="ngan">
+            <img src="image/ngânn_n.jpg" alt="ngann">
+            <div>
+                <h2>Ngân bếu :))</h2>
+                <p>Ngân hay cọc với dỗi ...</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <h1>LIÊN HỆ</h1>
+        <hr width="3%">
+        <p>Có thì thắc mắc thì hỏi Bò :v</p>
+        <div class="contact">
+            <div class="col25">
+                <h3>Địa chỉ nhà Ngân</h3>
+                <ul>
+                    <li>24 kiệt 350 Phan Chu Trinh, Phường An Cựu, Huế</li>
+                    <li><i class="fa fa-phone"></i> Phone: 0972 ngày mai nói tiếp! </li>
+                    <li><i class="fa fa-envelop"></i> Email: <a href="mailto:ngan@gmail.com">ngan@gmail.com</a></li>
+                </ul>
+            </div>
+            <div class="col25">
+                <h3>Giờ làm việc</h3>
+                <ul>
+                    <li>24 kiệt 350 Phan Chu Trinh, Phường An Cựu, Huế</li>
+                    <li>Phone: 0972 ngày mai nói tiếp! </li>
+                    <li>Email: <a href="mailto:ngan@gmail.com">ngan@gmail.com</a></li>
+                </ul>
+            </div>
+            <div class="col50">
+                <form action="">
+                <table class="msg">
+                    <tr>
+                        <td>
+                            <input type="text" placeholder="your name">
+                        </td>
+                        <td>
+                            <input type="text" placeholder="your mail">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <textarea placeholder="your message" cols="30" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="Send Message">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            </div>
+        </div>
+
+    </footer>
+</body>
+
+</html>

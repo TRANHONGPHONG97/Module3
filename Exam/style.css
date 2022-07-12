@@ -1,0 +1,84 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+body {
+    background-color: rgb(216, 216, 216);
+}
+/* CSS HEADER */
+header > h1 {
+ text-align: center;
+ color: red;
+ font-size: 50px;
+ /* bóng nhòe */
+ text-shadow: 3px 4px blue;
+ animation: doimau 1s infinite;
+}
+header p {
+    text-align: center;
+    color: blue;
+}
+@keyframes doimau {
+    from {
+        color: red;
+    }
+    to {
+        color: aqua;
+    }
+}
+/* CSS BODY */
+section.ngans{
+    display: flex;
+}
+div.ngan{
+width: 25%;
+background-color: aquamarine;
+text-align: center;
+padding: 15px;
+border-radius: 10px;
+margin: 5%;
+} 
+div.ngan >img {
+    width: 100%;
+    transition: transform .5s;
+    /* filter: brightness(200%) */
+}
+div.ngan > img:hover{
+transform: scale(1.2);
+}
+/* CSS FOOTER */
+footer{
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+footer h1, footer p {
+    text-align: center;
+}
+footer ul {
+    list-style-type: none;
+}
+.col25{
+    width: 25%;
+}
+.col50 {
+    width: 50%; 
+}
+div.contact{
+    display: flex;
+}
+table.msg {
+    width: 100%;
+}
+input[type=text]{
+    width: 90%;
+}
+textarea {
+    width: 93%;
+    padding: 10px;
+}
+input[type=submit]{
+    background-color: orange;
+    color: white;
+    padding: 15px;
+    text-align: center ;
+}

@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body .container {
+  width: 100%;
+  height: 635px;
+  background-image: url(/Project-HTML-TVPhon/CodeGym/assets/img/codegym-bg.png);
+  background-size: 100%;
+  display: flow-root;
+}
+
+body .container--form {
+  width: 500px;
+  height: 345px;
+  background: white;
+  margin: 140px auto;
+  display: flow-root;
+  border-top: 4px solid #0066cc;
+}
+
+body .container--form img {
+  display: block;
+  margin: 30px auto;
+}
+
+body .container--form p input {
+  display: block;
+  margin: 0 auto;
+  width: 400px;
+  height: 30px;
+  border: 0.5px solid #ededed;
+  border-bottom: 1px solid #8a8d90;
+}
+
+body .container--form p label {
+  margin-left: 47px;
+  font-size: 13px;
+  color: #8a8d90;
+}
+
+body .container--form a {
+  float: right;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #0088ce;
+  font-size: 13px;
+  margin-right: 48px;
+}
+
+body .container--form button {
+  display: block;
+  margin: 20px auto;
+  width: 407px;
+  height: 30px;
+  border: none;
+  background: #0066cc;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+/*# sourceMappingURL=Home.css.map */

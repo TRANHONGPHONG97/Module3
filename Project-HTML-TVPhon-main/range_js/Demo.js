@@ -1,0 +1,41 @@
+/* let value_container = document.getElementById("display-color");
+let value_red = document.getElementById("range-red").value;
+let value_green = document.getElementById("range-green").value;
+let value_blue = document.getElementById("range-blue").value;
+let result = document.getElementById("result");
+let result_red = document.getElementById("result-red");
+let result_green = document.getElementById("result-green");
+let result_blue = document.getElementById("result-blue");
+let result_red_div = document.getElementsByClassName("container--color--red--value")[0];
+let result_green_div = document.getElementsByClassName("container--color--green--value")[0];
+let result_blue_div = document.getElementsByClassName("container--color--blue--value")[0];
+value_container.style.background = "rgb("+(value_red)+"," +(value_green)+"," +(value_blue)+")";
+result.innerText = "RGB(" +value_red + ","+value_green+","+value_blue+")"; 
+result_red.innerText = "RED : "+value_red;
+result_green.innerText = "GREEN : "+value_green;
+result_blue.innerText = "BLUE : "+value_blue;
+result_red_div.style.background = "rgb(" +value_red+",0,0)";
+result_green_div.style.background = "rgb(0," +value_green+",0)";
+result_blue_div.style.background = "rgb(0,0," +value_green+")"; */
+function change_color() {
+    let value_container_change = document.getElementById("display-color");
+    let value_red_change = document.getElementById("range-red").value;
+    let value_green_change = document.getElementById("range-green").value;
+    let value_blue_change = document.getElementById("range-blue").value;
+    let result_change = document.getElementById("result");
+    let result_red_change = document.getElementById("result-red");
+    let result_green_change = document.getElementById("result-green");
+    let result_blue_change = document.getElementById("result-blue");
+    let result_red_div_change = document.getElementsByClassName("container--color--red--value")[0];
+    let result_green_div_change = document.getElementsByClassName("container--color--green--value")[0];
+    let result_blue_div_change = document.getElementsByClassName("container--color--blue--value")[0];
+    value_container_change.style.background = "rgb("+(value_red_change)+"," +(value_green_change)+"," +(value_blue_change)+")";
+    result_change.innerText = "RGB(" +value_red_change + ","+value_green_change+","+value_blue_change+")"; 
+    result_red_change.innerText = "RED : "+value_red_change;
+    result_green_change.innerText = "GREEN : "+value_green_change;
+    result_blue_change.innerText = "BLUE : "+value_blue_change;
+    result_red_div_change.style.background = "rgb(" +value_red_change+",0,0)";
+    result_green_div_change.style.background = "rgb(0," +value_green_change+",0)";
+    result_blue_div_change.style.background = "rgb(0,0," +value_blue_change+")";
+}
+change_color();

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Demo.css">
+</head>
+<body>
+    <div id="display-color">
+        <h1 id="result"></h1>
+    </div>
+    <div class="container--color">
+        <div class="container--color--red">
+            <input type="range" id="range-red" min="0" value="100" max="255" oninput="change_color()">
+            <div class="container--color--red--value">
+                <span id="result-red"></span>
+            </div>
+        </div>
+        <div class="container--color--green">
+            <input type="range" id="range-green" min="0" value="100" max="255" oninput="change_color()">
+            <div class="container--color--green--value">
+                <span id="result-green"></span>
+            </div>
+        </div>
+        <div class="container--color--blue">
+            <input type="range" id="range-blue" min="0" value="100" max="255" oninput="change_color()">
+            <div class="container--color--blue--value">
+                <span id="result-blue"></span>
+            </div>
+        </div>
+    </div>
+    <script src="Demo.js"></script>
+</body>
+</html>

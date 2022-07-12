@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Bài tập] Tạo trang đọc truyện ngắn</title>
+</head>
+<style>
+    body{
+    font-family: Arial;
+}
+h1 {
+    color: red;
+    font-style: normal;
+    text-align: center;
+}
+img{
+    width: 300px;
+    height: 500px;
+    margin-top: 30px;
+}
+#container{
+    height: 30px;
+    padding:0;
+    margin:0;
+    background-color: #000000;
+    border: 1px solid #CDCDCD;
+    display: flex;
+}
+#container li{
+    position: relative;
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding:0;
+}
+#container li a {
+    width: 100px;
+    height: 30px;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    line-height: 30px;
+    background-color: black;
+    color: white;
+}
+#container ul ul li a {
+    width: 200px;
+    text-align: left;
+    padding-left: 10px;
+
+}
+#container li a:hover{
+    background-color: red;
+}
+
+#container ul ul{
+    position: absolute;
+    top: 30px;
+}
+#container ul ul{
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    visibility: hidden;
+}
+#container ul li:hover ul{
+    visibility: visible;
+}
+.row {
+    margin-top: 100px;
+}
+</style>
+
+<body>
+    <h1>Truyện tranh: Thám tử lừng danh Conan</h1>
+    <div id="container">
+        <img src="Img_shinichi.png" alt="img">
+    </div=>
+    <div class="row">
+        <ul>
+            <li><a href="#">Truyện tranh Conan</a>
+                <ul>
+                    <li>
+                        <h5><a href="https://tuoitho.mobi/doc-truyen/conan/chap-1096.html#gsc.tab=0">Tập 103 - Bí mật hình vuông</a></h5>
+                    </li>
+                    <li>
+                        <h5><a href="https://tuoitho.mobi/doc-truyen/conan/chap-1095.html#gsc.tab=0">Tập 103 - 3 mật mã</a></h5>
+                    </li>
+                    <li>
+                        <h5><a href="https://tuoitho.mobi/doc-truyen/conan/chap-1094.html#gsc.tab=0">Tập 103 - Cuộc gặp ngẫu nhiên</a></h5>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

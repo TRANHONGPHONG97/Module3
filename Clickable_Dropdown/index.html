@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How TO - Clickable Dropdown</title>
+</head>
+<style>
+    .dropbtn {
+      background-color: aqua;
+      color: black;
+      padding: 25px;
+      font-size: 25px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .dropbtn:hover, .dropbtn:focus {
+      background-color: blue;
+    }
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: gray;
+      min-width: 157px;
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown a:hover {background-color: gold;}
+    
+    .show {display: block;}
+    </style>
+<body>
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">C0322G1</button>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="https://www.facebook.com/huynhthi.phuongngan">Bin</a>
+          <a href="https://www.facebook.com/profile.php?id=100017491183684">Bò</a>
+          <a href="https://www.facebook.com/ca.ro.16121">Bột</a>
+          <a href="https://www.facebook.com/tri.dao.16">Đào</a>
+        </div>
+      </div>
+</body>
+<script>
+    //Khi người dùng nhấp vào nút, chuyển đổi giữa ẩn và hiển thị nội dung thả xuống 
+    function myFunction() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+    
+    // Đóng menu thả xuống nếu người dùng nhấp vào bên ngoài
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    </script>
+</html>
