@@ -6,16 +6,16 @@
 <!--    <welcome-file-list>-->
 <!--        <welcome-file>Hello.jsp</welcome-file>-->
 <!--    </welcome-file-list>-->
-    <welcome-file-list>
-        <welcome-file>index1.jsp</welcome-file>
-    </welcome-file-list>
+<!--    <welcome-file-list>-->
+<!--        <welcome-file>index2.jsp</welcome-file>-->
+<!--    </welcome-file-list>-->
 <!--    <servlet>-->
-<!--        <servlet-name>index</servlet-name>-->
-<!--        <servlet-class>web.IndexServlet</servlet-class>-->
+<!--        <servlet-name>sevelett</servlet-name>-->
+<!--        <servlet-class>com.codegym.calculator.servlet</servlet-class>-->
 <!--    </servlet>-->
 
 <!--    <servlet-mapping>-->
-<!--        <servlet-name>index</servlet-name>-->
-<!--        <url-pattern>/index</url-pattern>-->
+<!--        <servlet-name>sevelett</servlet-name>-->
+<!--        <url-pattern>/servlet-demo</url-pattern>-->
 <!--    </servlet-mapping>-->
 </web-app>
