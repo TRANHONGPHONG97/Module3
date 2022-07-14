@@ -1,4 +1,4 @@
-package com.example.server_time;
+package com.example.jsp_jstl;
 
 import java.io.*;
 import javax.servlet.http.*;

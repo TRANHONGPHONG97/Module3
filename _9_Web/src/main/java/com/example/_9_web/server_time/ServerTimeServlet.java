@@ -1,4 +1,4 @@
-package com.example.server_time;
+package com.example._9_web.server_time;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
