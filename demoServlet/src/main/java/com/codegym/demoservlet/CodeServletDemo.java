@@ -20,7 +20,7 @@ public class CodeServletDemo extends HttpServlet {
 //        403 - truy cập tài nguyên bị hạn chế
 //        404 - đường dẫn không tìm thấy
 //        500 - server trả về lỗi không mong đợi
-        resp.sendError(100);
+        resp.sendError(404);
 //        resp.sendError(200);
 //        resp.sendError(301);
 //        resp.sendError(401);

@@ -23,10 +23,13 @@ public class LoginPage extends HttpServlet {
         String pass = req.getParameter("pass");
         if (user.equals("C0322G1") && pass.equals("123")) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/Welcome1");
+            RequestDispatcher dispatcher1 = req.getRequestDispatcher("/Welcome1");
             dispatcher.forward(req, resp);
+            dispatcher1.forward(req, resp);
         } else {
             printWriter.println("User va pass khong chinh xac!");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/form-login-page");
+            dispatcher.include(req, resp);
             dispatcher.include(req, resp);
         }
     }
