@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: hibernate-validator
+Implementation-Version: 6.1.0.Final
+Built-By: jenkins
+Implementation-Vendor-Id: org.hibernate.validator
+Created-By: Apache Maven 3.5.2
+Build-Jdk: 1.8.0_221
+Implementation-URL: http://hibernate.org/validator/
+Implementation-Vendor: org.hibernate.validator
+

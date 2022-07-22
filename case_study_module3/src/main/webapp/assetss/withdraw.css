@@ -1,0 +1,20 @@
+button {
+    border: 1px solid #ffc107;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: #ffc107;
+    background: white;
+    border-radius: 5px;
+}
+button i {
+    font-size: 20px;
+    margin-right: 10px;
+}
+button:hover {
+    background: #ffc107;
+    color: white;
+    transition: .5s;
+}
+h1 {
+    font-size: 30px;
+}

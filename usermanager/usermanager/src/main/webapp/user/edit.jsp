@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 7/12/2022
-  Time: 9:46 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -20,7 +13,7 @@
     </h2>
 </center>
 <div align="center">
-    <form method="post" >
+    <form method="post">
         <table border="1" cellpadding="5">
             <caption>
                 <h2>
@@ -47,11 +40,29 @@
                 </td>
             </tr>
             <tr>
+                <th>User password:</th>
+                <td>
+                    <input type="password" name="password" id="password" size="45" value ="${user.getPassword() }"/>
+                </td>
+            </tr>
+            <tr>
                 <th>Country:</th>
                 <td>
-                    <input type="text" name="country" size="15"
-                           value="<c:out value='${user.country}' />"
-                    />
+                    <select name="idcountry">
+
+                        <c:forEach items="${applicationScope.listCountry }" var="country">
+
+                            <c:choose>
+                                <c:when test="${country.getId() == user.getId() }">
+                                    <option value="${country.getId() }" selected>${country.getName() }</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${country.getId() }">${country.getName() }</option>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>

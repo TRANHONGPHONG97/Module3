@@ -39,6 +39,22 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
+    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Customer customer = this.customerService.findById(id);
+        RequestDispatcher dispatcher;
+        if(customer == null){
+            dispatcher = request.getRequestDispatcher("error-404.jsp");
+        } else {
+            this.customerService.remove(id);
+            try {
+                response.sendRedirect("/customers");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
@@ -172,21 +188,7 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 
-    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Customer customer = this.customerService.findById(id);
-        RequestDispatcher dispatcher;
-        if (customer == null) {
-            dispatcher = request.getRequestDispatcher("error-404.jsp");
-        } else {
-            this.customerService.remove(id);
-            try {
-                response.sendRedirect("/customers");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
     private void viewCustomer(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));

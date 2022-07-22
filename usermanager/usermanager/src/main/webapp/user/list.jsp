@@ -1,12 +1,3 @@
-<%@ page import="com.codegym.usermanager.model.User" %>
-<%@ page import="java.util.List" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 7/12/2022
-  Time: 9:43 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -31,36 +22,25 @@
             <th>Country</th>
             <th>Actions</th>
         </tr>
-        <%
-            if(request.getAttribute("listUser")==null){
-                System.out.println("List user is null");
-            }
-        %>
-        <c:forEach var="user" items="${listUser}">
+        <c:forEach var="user" items="${requestScope.listUser}">
             <tr>
-                <td><c:out value="${user.id}"/></td>
-                <td><c:out value="${user.name}"/></td>
-                <td><c:out value="${user.email}"/></td>
-                <td><c:out value="${user.country}"/></td>
+                <td><c:out value="${user.getId()}"/></td>
+                <td><c:out value="${user.getName()}"/></td>
+                <td><c:out value="${user.getEmail()}"/></td>
+                <td>
+                    <c:forEach items="${applicationScope.listCountry }" var = "country">
+                        <c:if test="${country.getId() == user.getIdcountry()}">
+                            <c:out value="${country.getName()}"/>
+                        </c:if>
+                    </c:forEach>
+
+                </td>
                 <td>
                     <a href="/users?action=edit&id=${user.id}">Edit</a>
                     <a href="/users?action=delete&id=${user.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
-<%--        <%--%>
-<%--            String strOut = "";--%>
-<%--            for (User u : (List<User>) request.getAttribute("listUser")) {--%>
-<%--                strOut += "<tr>";--%>
-<%--                strOut += "<td>" + u.getId() +"</td>";--%>
-<%--                strOut += "<td>" + u.getName() +"</td>";--%>
-<%--                strOut += "<td>" + u.getEmail() +"</td>";--%>
-<%--                strOut += "<td>" + u.getCountry() +"</td>";--%>
-<%--                strOut +="</tr>";--%>
-<%--            }--%>
-
-<%--            out.println(strOut);--%>
-<%--        %>--%>
     </table>
 </div>
 </body>

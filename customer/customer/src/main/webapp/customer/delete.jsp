@@ -12,18 +12,19 @@
     <h3>Are you sure?</h3>
     <fieldset>
         <legend>Customer information</legend>
+        <input type = "hidden" name ="id" value="${user.getId()}"/>
         <table>
             <tr>
-                <td>Name: </td>
+                <td>User Name:</td>
                 <td>${requestScope["customer"].getName()}</td>
             </tr>
             <tr>
-                <td>Email: </td>
+                <td>User Email:</td>
                 <td>${requestScope["customer"].getEmail()}</td>
             </tr>
             <tr>
-                <td>Address: </td>
-                <td>${requestScope["customer"].getAddress()}</td>
+                <td>Country: </td>
+                <td>${requestScope["customer"].getIdcountry()}</td>
             </tr>
             <tr>
                 <td><input type="submit" value="Delete customer"></td>
