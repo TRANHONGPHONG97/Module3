@@ -10,5 +10,5 @@ public interface IRoleDao {
     public Role selectRole(int id);
     public List<Role> selectAllRole();
     public boolean deleteRole(int id) throws SQLException;
-    public boolean updateCountry(Role role) throws SQLException;
+    public boolean updateRole(Role role) throws SQLException;
 }

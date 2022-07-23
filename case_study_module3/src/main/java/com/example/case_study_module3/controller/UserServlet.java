@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.function.BiConsumer;
 
-@WebServlet(urlPatterns = "/user_manager")
+@WebServlet(name = "user", urlPatterns = "/user_manager")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 50)
@@ -69,10 +69,30 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        try {
+            switch (action) {
+                case "create":
+                    insertUser(request, response);
+                    break;
+                case "edit":
+                    updateUser(request, response);
+                    break;
+                default:
+                    listUser(request, response);
+            }
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        }
+    }
     private void listUserPaging(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 1;
-        int recordsPerPage = 3;
+        int recordsPerPage = 8;
         String q = "";
         int idrole = -1;
         if (request.getParameter("q") != null) {
@@ -97,27 +117,7 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if (action == null) {
-            action = "";
-        }
-        try {
-            switch (action) {
-                case "create":
-                    insertUser(request, response);
-                    break;
-                case "edit":
-                    updateUser(request, response);
-                    break;
-                default:
-                    listUser(request, response);
-            }
-        } catch (SQLException ex) {
-            throw new ServletException(ex);
-        }
-    }
+
 
     private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -162,7 +162,7 @@ public class UserServlet extends HttpServlet {
 
         User user = new User();
         req.setAttribute("user", user);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/create.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/create_product.jsp");
         dispatcher.forward(req, resp);
 
     }
@@ -171,7 +171,7 @@ public class UserServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         User existingUser = userDao.selectUser(id);
         req.setAttribute("user", existingUser);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/edit.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/edit_product.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -196,7 +196,7 @@ public class UserServlet extends HttpServlet {
         int idRole = Integer.parseInt(request.getParameter("idrole"));
         User user = new User(id, name, password, phone, email, idRole);
         userDao.updateUser(user);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/edit.jsp");
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/edit_product.jsp");
 //          dispatcher.forward(request, response);
         response.sendRedirect("/user_manager");
     }
@@ -213,7 +213,7 @@ public class UserServlet extends HttpServlet {
 //
 //        User user = new User(userName, password, phone, email, idrole);
 //        userDao.insertUser(user);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/create.jsp");
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/create_product.jsp");
 //        dispatcher.forward(request, response);
 ////        response.sendRedirect("/user_manager");
 
@@ -223,14 +223,14 @@ public class UserServlet extends HttpServlet {
 
             try {
                 user.setIdUser(Integer.parseInt(request.getParameter("idUser")));
+                String userName = request.getParameter("userName");
+                user.setUserName(userName);
                 String phone = request.getParameter("phone");
                 user.setPhone(phone);
                 String email = request.getParameter("email");
                 user.setEmail(email);
-                String userName = request.getParameter("userName");
-                user.setUserName(userName);
                 user.setPassword(request.getParameter("password"));
-                int idRole = Integer.parseInt(request.getParameter("idrole"));
+                user.setIdrole(Integer.parseInt(request.getParameter("idrole")));
                 ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
                 Validator validator = validatorFactory.getValidator();
                 Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
@@ -248,7 +248,7 @@ public class UserServlet extends HttpServlet {
                     request.setAttribute("errors", errors);
                 List<Role> roleList = iRoleDao.selectAllRole();
                 request.setAttribute("listRole", roleList);
-                    request.getRequestDispatcher("/WEB-INF/view/create.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/view/create_product.jsp").forward(request, response);
                 } else {
                     if (userDao.selectUserByEmail(email) != null) {
                         flag = false;
@@ -265,7 +265,7 @@ public class UserServlet extends HttpServlet {
                         hashMap.put("phone", "Phone exits in database");
                         System.out.println(this.getClass() + " User Name exits in database");
                     }
-                    if (iRoleDao.selectRole(idRole) == null) {
+                    if (iRoleDao.selectRole(user.getIdrole()) == null) {
                         flag = false;
                         hashMap.put("user", "Country value invalid");
                         System.out.println(this.getClass() + " Country invalid");
@@ -274,7 +274,7 @@ public class UserServlet extends HttpServlet {
                         userDao.insertUser(user);
                         User u = new User();
                         request.setAttribute("user", u);
-                        request.getRequestDispatcher("WEB-INF/view/create.jsp").forward(request, response);
+                        request.getRequestDispatcher("WEB-INF/view/create_product.jsp").forward(request, response);
                     } else {
                         errors = "";
                         hashMap.forEach(new BiConsumer<String, String>() {
@@ -288,7 +288,7 @@ public class UserServlet extends HttpServlet {
 
                         request.setAttribute("user", user);
                         request.setAttribute("errors", errors);
-                        request.getRequestDispatcher("/WEB-INF/view/create.jsp").forward(request, response);
+                        request.getRequestDispatcher("/WEB-INF/view/create_product.jsp").forward(request, response);
                     }
                 }
             } catch (NumberFormatException ex) {
@@ -298,7 +298,7 @@ public class UserServlet extends HttpServlet {
                 errors += "";
                 request.setAttribute("user", user);
                 request.setAttribute("errors", errors);
-                request.getRequestDispatcher("/WEB-INF/view/create.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/view/create_product.jsp").forward(request, response);
             } catch (Exception ex) {
             }
         }

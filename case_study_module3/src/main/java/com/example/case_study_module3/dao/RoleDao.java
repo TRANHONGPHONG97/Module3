@@ -95,7 +95,7 @@ public class RoleDao implements IRoleDao{
     }
 
     @Override
-    public boolean updateCountry(Role role) throws SQLException {
+    public boolean updateRole(Role role) throws SQLException {
         boolean rowUpdated;
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ROLE_SQL);) {

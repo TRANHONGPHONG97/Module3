@@ -52,7 +52,7 @@ public class User {
         this.userName = userName;
     }
     @NotEmpty
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message = "Format password not right")
+    @Pattern(regexp = "^([A-Z][a-z0-9]{8,24})", message = "Format password not right")
     public String getPassword() {
         return password;
     }

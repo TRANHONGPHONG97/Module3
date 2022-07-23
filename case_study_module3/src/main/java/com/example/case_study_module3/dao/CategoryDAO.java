@@ -1,13 +1,12 @@
 package com.example.case_study_module3.dao;
 
-
 import com.example.case_study_module3.model.Category;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDAO {
+public class CategoryDAO implements ICategoryDAO{
     private String jdbcURL = "jdbc:mysql://localhost:3306/user_manager?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "CHUcu123456";
@@ -103,10 +102,8 @@ public class CategoryDAO {
 
         try ( Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_CATEGORY_SQL);) {
-            statement.setString(1, category.getName());
-             
-            statement.setInt(3, category.getId());
-
+            statement.setInt(1, category.getId());
+            statement.setString(2, category.getName());
             rowUpdated = statement.executeUpdate() > 0;
         }
         return rowUpdated;

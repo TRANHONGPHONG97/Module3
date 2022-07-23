@@ -231,20 +231,21 @@ public class UserDao implements IUserDao {
             connection.close();
             return flag;
     }
-    public User selectUserByEmail(String email) {
+    public User selectUserByEmail(String emails) {
         User user = null;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_EMAIL);) {
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, emails);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("idUser");
-                String name = rs.getString("userName");
+                int idUser = rs.getInt("idUser");
+                String userName = rs.getString("userName");
+                String email = rs.getString("email");
                 String password = rs.getString("password");
                 String phone= rs.getString("phone");
                 int idrole = rs.getInt("idrole");
-                user = new User(id, name, password, phone, email, idrole);
+                user = new User(idUser, userName,password, phone, email,   idrole);
                 return user;
             }
             return null;

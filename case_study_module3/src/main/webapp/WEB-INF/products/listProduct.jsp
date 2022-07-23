@@ -46,10 +46,10 @@
     <hr>
     <ul class="app-menu">
 
-        <li><a class="app-menu__item active" href="/user_manager"><i class='app-menu__icon bx bx-id-card'></i>
+        <li><a class="app-menu__item active" href="#"><i class='app-menu__icon bx bx-id-card'></i>
             <span class="app-menu__label">Quản lý nhân viên</span></a></li>
 
-        <li><a class="app-menu__item" href="/product"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span
+        <li><a class="app-menu__item" href="../../WEB-INF/product/listProduct.jsp"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span
                 class="app-menu__label">Quản lý sản phẩm</span></a>
         </li>
         <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-task'></i><span
@@ -73,7 +73,7 @@
                     <div class="row element-button">
                         <div class="col-sm-2">
 
-                            <a class="btn btn-add btn-sm" href="user_manager?action=create" title="Thêm"><i
+                            <a class="btn btn-add btn-sm" href="/product?action=create" title="Thêm"><i
                                     class="fas fa-plus"></i>
                                 Tạo mới nhân viên</a>
                         </div>
@@ -82,23 +82,23 @@
                                     class="fas fa-trash-alt"></i> Xóa tất cả </a>
                         </div>
                         <div>
-                            <form action="user_manager">
+                            <form action="product">
                                 Search: <input type="text" hint="search" value="${requestScope.q}" name="q"> Filter:
-                                <select name="idrole" id="">
+                                <select name="category" id="">
                                     <%--            <option value="1">Việt Nam</option>--%>
                                     <%--            <option value="2">Pháp</option>--%>
                                     <%--            <option value="3">USA</option>--%>
                                     <%--            <option value="4">China</option>--%>
                                     <option value="-1">All</option>
                                     --%>
-                                    <c:forEach items="${applicationScope.listRole}" var="role">
+                                    <c:forEach items="${applicationScope.listProduct}" var="product">
 
                                         <c:choose>
-                                            <c:when test="${role.getId() == requestScope.idrole}">
-                                                <option selected value="${role.getId()}">${role.getName()}</option>
+                                            <c:when test="${product.getId() == requestScope.idrole}">
+                                                <option selected value="${product.getId()}">${product.getName()}</option>
                                             </c:when>
                                             <c:otherwise>
-                                                <option value="${role.getId()}">${role.getName()}</option>
+                                                <option value="${product.getId()}">${product.getName()}</option>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
@@ -113,38 +113,41 @@
                            id="sampleTable">
                         <thead>
                         <tr>
-<%--                            <th width="10"><input type="checkbox" id="all"></th>--%>
-                            <th>ID User</th>
-                            <th>User Name</th>
-                            <th>Password</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
+                            <%--                            <th width="10"><input type="checkbox" id="all"></th>--%>
+                            <th>ID PRODUCT</th>
+                            <th>NAME PRODUCT</th>
+                            <th>IMAGE</th>
+                            <th>PRICE</th>
+                            <th>QUANTITY</th>
+                            <th>CATEGORY</th>
+                            <th>ACTION</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="user" items="${requestScope.list}">
+                        <c:forEach var="product" items="${requestScope.list}">
 
                             <tr>
-                                <td><c:out value="${user.getIdUser()}"/></td>
-                                <td><c:out value="${user.getUserName()}"/></td>
-                                <td><c:out value="${user.getPassword()}"/></td>
-                                <td><c:out value="${user.getPhone()}"/></td>
-                                <td><c:out value="${user.getEmail()}"/></td>
+                                <td><c:out value="${product.getId()}"/></td>
+                                <td><c:out value="${product.getrName()}"/></td>
+                                <td><c:out value="${product.getImage()}"/></td>
+                                <td><c:out value="${product.getPrice()}"/></td>
+                                <td><c:out value="${product.getQuantity()}"/></td>
 
                                 <td>
-                                    <c:if test="${user.getIdrole() == 1}">
-                                        <c:out value="admin"/>
+                                    <c:if test="${product.getCategory_id() == 1}">
+                                        <c:out value="Bàn"/>
                                     </c:if>
-                                    <c:if test="${user.getIdrole() == 2}">
-                                        <c:out value="user"/>
+                                    <c:if test="${product.getCategory_id() == 2}">
+                                        <c:out value="Ghế"/>
+                                    </c:if>
+                                    <c:if test="${product.getCategory_id() == 3}">
+                                        <c:out value="Tủ"/>
                                     </c:if>
                                 </td>
                                 <td>
-                                    <a href="/user_manager?action=edit&id=${user.getIdUser()}"
+                                    <a href="/product?action=edit&id=${product.getId()}"
                                        class="fas fa-edit">Edit </a>
-                                    <a onclick="showMessage(${user.getIdUser()})"
+                                    <a onclick="showMessage(${product.getId()})"
                                        class="fas fa-trash-alt">Delete</a>
                                 </td>
 
@@ -166,7 +169,7 @@
                         <ul class="pagination">
                             <c:if test="${requestScope.currentPage != 1}">
                                 <li class="page-item ">
-                                    <a class="page-link " href="user_manager?page=${requestScope.currentPage - 1}">Previous</a>
+                                    <a class="page-link " href="product?page=${requestScope.currentPage - 1}">Previous</a>
                                 </li>
                             </c:if>
 
@@ -176,12 +179,12 @@
                             <c:forEach begin="1" end="${noOfPages}" var="i">
                                 <c:choose>
                                     <c:when test="${requestScope.currentPage eq i}">
-                                        <li class="page-item "><a class="page-link" href="user_manager?page=${i}">${i}</a></li>
+                                        <li class="page-item "><a class="page-link" href="product?page=${i}">${i}</a></li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item ">
                                             <a class="page-link"
-                                               href="user_manager?page=${i}">${i}</a> </li>
+                                               href="product?page=${i}">${i}</a> </li>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
@@ -190,7 +193,7 @@
 
                             <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                                 <li class="page-item ">
-                                    <a class="page-link" href="user_manager?page=${requestScope.currentPage + 1}">Next</a>
+                                    <a class="page-link" href="product?page=${requestScope.currentPage + 1}">Next</a>
                                 </li>
                             </c:if>
                         </ul>

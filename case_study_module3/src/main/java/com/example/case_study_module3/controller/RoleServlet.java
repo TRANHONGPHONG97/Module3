@@ -46,7 +46,7 @@ public class RoleServlet extends HttpServlet {
     private void listRole(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Role> listRole = iRoleDao.selectAllRole();
         request.setAttribute("listRole", listRole);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/listCategory.jsp");
         dispatcher.forward(request, response);
     }
     private void deleteRole(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
@@ -54,18 +54,18 @@ public class RoleServlet extends HttpServlet {
         iRoleDao.deleteRole(id);
         List<Role> listRole = iRoleDao.selectAllRole();
         request.setAttribute("listRole", listRole);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/listCategory.jsp");
         dispatcher.forward(request, response);
     }
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
        Role existingRole = iRoleDao.selectRole(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/edit.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/edit_product.jsp");
         request.setAttribute("role", existingRole);
         dispatcher.forward(request, response);
     }
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/create_product.jsp");
         dispatcher.forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -90,7 +90,7 @@ public class RoleServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         Role role = new Role(id, name);
-        iRoleDao.updateCountry(role);
+        iRoleDao.updateRole(role);
         response.sendRedirect("/role");
     }
     private void insertRole(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
@@ -98,7 +98,7 @@ public class RoleServlet extends HttpServlet {
         Role role = new Role();
       role.setName(name);
         iRoleDao.insertRole(role);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/roles/create_product.jsp");
         dispatcher.forward(request, response);
     }
     @Override
