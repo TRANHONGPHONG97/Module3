@@ -1,14 +1,29 @@
 package com.example.case_study_module3.dao;
 
 import com.example.case_study_module3.model.User;
+import com.example.case_study_module3.utils.MySQLConnUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UserDao implements IUserDao {
+    public static  String USER_EXIST_BY_EMAIL = "" +
+            "SELECT COUNT(*) AS COUNT " +
+            "FROM user AS u " +
+            "WHERE u.email = ?;";
+    public static  String USER_EXIST_BY_USER = "" +
+            "SELECT COUNT(*) AS COUNT " +
+            "FROM user AS u " +
+            "WHERE u.userName = ?;";
+    public static  String USER_EXIST_BY_PHONE = "" +
+            "SELECT COUNT(*) AS COUNT " +
+            "FROM user AS u " +
+            "WHERE u.phone = ?;";
+    private static String USER_EXIST_BY_USERNAME_PASSWORD = "" +
+            "SELECT userName, password, idrole  " +
+            "FROM `user` AS u  " +
+            "WHERE u.password = ? ;";
     private String jdbcURL = "jdbc:mysql://localhost:3306/user_manager?useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "CHUcu123456";
@@ -166,8 +181,8 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public void insertUser(User user) throws SQLException {
-        System.out.println(INSERT_USERS_SQL);
+    public boolean insertUser(User user) throws SQLException {
+        boolean success =false;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
             preparedStatement.setString(1, user.getUserName());
@@ -177,9 +192,29 @@ public class UserDao implements IUserDao {
             preparedStatement.setInt(5, user.getIdrole());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
+            success = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return success;
+    }
+    @Override
+    public boolean updateUser(User user) throws SQLException {
+        boolean success = false;
+        try (Connection connection = MySQLConnUtils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getPhone());
+            statement.setString(4, user.getEmail());
+            statement.setInt(5, user.getIdrole());
+            statement.setInt(6, user.getIdUser());
+           success = statement.executeUpdate() >0;
+        }
+        catch (SQLException e) {
+            MySQLConnUtils.printSQLException(e);
+        }
+        return success;
     }
 
     @Override
@@ -205,20 +240,7 @@ public class UserDao implements IUserDao {
     }
 
 
-    @Override
-    public boolean updateUser(User user) throws SQLException {
-        boolean rowUpdated;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
-            statement.setString(1, user.getUserName());
-            statement.setString(2, user.getPassword());
-            statement.setString(3, user.getPhone());
-            statement.setString(4, user.getEmail());
-            statement.setInt(5, user.getIdrole());
-            statement.setInt(6, user.getIdUser());
-            rowUpdated = statement.executeUpdate() > 0;
-        }
-        return rowUpdated;
-    }
+
 
     @Override
     public boolean deleteUser(int id) throws SQLException {
@@ -254,50 +276,50 @@ public class UserDao implements IUserDao {
             return null;
         }
     }
-    public User selectUserByPhone(String phone) {
-        User user = null;
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_PHONE);) {
-            preparedStatement.setString(1, phone);
-            System.out.println(preparedStatement);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("idUser");
-                String name = rs.getString("userName");
-                String password = rs.getString("password");
-                String email = rs.getString("email");
-                int idrole = rs.getInt("idrole");
-
-                user = new User(id, name, password, phone, email, idrole);
-                return user;
-            }
-            return null;
-        } catch (SQLException e) {
-            printSQLException(e);
-            return null;
-        }}
-    public User selectUserByUserName(String userName) {
-        User user = null;
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME);) {
-            preparedStatement.setString(1, userName);
-            System.out.println(preparedStatement);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("idUser");
-                String password = rs.getString("password");
-                String phone = rs.getString("phone");
-                String email = rs.getString("email");
-                int idrole = rs.getInt("idrole");
-
-                user = new User(id, userName, password, phone, email, idrole);
-                return user;
-            }
-            return null;
-        } catch (SQLException e) {
-            printSQLException(e);
-            return null;
-        }}
+//    public selectUserByPhone(String phone) {
+//        User user = null;
+//        try (Connection connection = getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_PHONE);) {
+//            preparedStatement.setString(1, phone);
+//            System.out.println(preparedStatement);
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while (rs.next()) {
+//                int id = rs.getInt("idUser");
+//                String name = rs.getString("userName");
+//                String password = rs.getString("password");
+//                String email = rs.getString("email");
+//                int idrole = rs.getInt("idrole");
+//
+//                user = new User(id, name, password, phone, email, idrole);
+//                return user;
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            printSQLException(e);
+//            return null;
+//        }}
+//    public selectUserByUserName(String userName) {
+//        User user = null;
+//        try (Connection connection = getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME);) {
+//            preparedStatement.setString(1, userName);
+//            System.out.println(preparedStatement);
+//            ResultSet rs = preparedStatement.executeQuery();
+//            while (rs.next()) {
+//                int id = rs.getInt("idUser");
+//                String password = rs.getString("password");
+//                String phone = rs.getString("phone");
+//                String email = rs.getString("email");
+//                int idrole = rs.getInt("idrole");
+//
+//                user = new User(id, userName, password, phone, email, idrole);
+//                return user;
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            printSQLException(e);
+//            return null;
+//        }}
 
 
 
@@ -315,5 +337,86 @@ public class UserDao implements IUserDao {
                 }
             }
         }
+    }
+
+    public boolean existsByEmail(String email) {
+        boolean exist = false;
+
+        try {
+            Connection connection = MySQLConnUtils.getConnection();
+            PreparedStatement statement = connection.prepareCall(USER_EXIST_BY_EMAIL);
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    exist = true;
+                }
+            }
+        }
+        catch (SQLException e) {
+            MySQLConnUtils.printSQLException(e);
+        }
+        return exist;
+    }
+    public boolean existsByUser(String userName) {
+        boolean exist = false;
+
+        try {
+            Connection connection = MySQLConnUtils.getConnection();
+            PreparedStatement statement = connection.prepareCall(USER_EXIST_BY_USER);
+            statement.setString(1, userName);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    exist = true;
+                }
+            }
+        }
+        catch (SQLException e) {
+            MySQLConnUtils.printSQLException(e);
+        }
+        return exist;
+    }
+    public boolean existsByPhone(String phone) {
+        boolean exist = false;
+
+        try {
+            Connection connection = MySQLConnUtils.getConnection();
+            PreparedStatement statement = connection.prepareCall(USER_EXIST_BY_PHONE);
+            statement.setString(1, phone);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    exist = true;
+                }
+            }
+        }
+        catch (SQLException e) {
+            MySQLConnUtils.printSQLException(e);
+        }
+        return exist;
+    }
+    public boolean existByPassWord1(String username) {
+        boolean exist = false;
+        try {
+            Connection connection = MySQLConnUtils.getConnection();
+            CallableStatement statement = connection.prepareCall(USER_EXIST_BY_USERNAME_PASSWORD);
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                String userName = rs.getString("userName");
+                String password = rs.getString("password");
+                String roles = rs.getString("idrole");
+                if (userName != null && password != null && roles.equals("admin")) {
+                    exist = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exist;
     }
 }

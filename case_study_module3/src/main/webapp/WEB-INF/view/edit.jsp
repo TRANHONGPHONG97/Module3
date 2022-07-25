@@ -15,18 +15,18 @@
     <link rel="stylesheet" href="../../assetss/edit.css">
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <title>Edit User</title>
+    <title>Update Product</title>
 </head>
 <body>
 <div class="container">
     <div class="row header">
         <div class="col-sm-8 header--left">
-            <h1>Update User information</h1>
+            <h1>Update User</h1>
         </div>
         <div class="col-sm-4 header--right list--right">
             <a href="/user_manager">
                 <i class="fa-solid fa-list"></i>
-                <span>List of User</span>
+                <span>USER LIST</span>
             </a>
         </div>
     </div>
@@ -50,16 +50,35 @@
                     <div class="col-sm-6">
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" value="<c:out value="${user.getEmail()}"/>">
-                        <label for="idrole">Role</label>
-                        <input type="text" id="idrole" name="idrole" value="<c:out value="${user.getIdrole()}"/>">
+                        <label >Role</label>
+                        <br>
+                        <select name="idrole">
+                            <c:forEach items="${listRole}" var="role">
+                                <option value="${role.getId()}">${role.getName()}</option>
+                            </c:forEach>
+                        </select>
+<%--                        <input type="text" id="idrole" name="idrole" value="<c:out value="${user.getIdrole()}"/>">--%>
                     </div>
                 </div>
                 <button type="submit">
                     <i class="fa-solid fa-pen-to-square"></i>
-                    Save changes
+                  UPDATE
                 </button>
-
             </form>
+        </div>
+        <div class="footer" style="margin-left: 200px">
+            <c:if test="${requestScope['success'] == true}">
+                <ul class="success">
+                    <li>Cập nhật thành công</li>
+                </ul>
+            </c:if>
+            <c:if test="${!requestScope['errors'].isEmpty()}">
+                <ul class="error">
+                    <c:forEach items="${requestScope['errors']}" var="item">
+                        <li>${item}</li>
+                    </c:forEach>
+                </ul>
+            </c:if>
         </div>
     </div>
 </div>

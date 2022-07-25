@@ -4,6 +4,7 @@ package com.example.case_study_module3.controller;
 import com.example.case_study_module3.dao.CategoryDAO;
 import com.example.case_study_module3.dao.ProductDAO;
 import com.example.case_study_module3.model.Product;
+import com.example.case_study_module3.utils.ValidateUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,12 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 50)
-@WebServlet( name = "product" , urlPatterns = "/product")
+@WebServlet(name = "product", urlPatterns = "/product")
 public class ProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -47,6 +49,8 @@ public class ProductServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
         if (action == null) {
             action = "";
@@ -113,6 +117,7 @@ public class ProductServlet extends HttpServlet {
         int noOfRecords = productDAO.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
+        System.out.println(listProduct);
         request.setAttribute("list", listProduct);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
@@ -165,7 +170,7 @@ public class ProductServlet extends HttpServlet {
 
         Product product = new Product();
         req.setAttribute("product", product);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/product/create_product.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/products/create_product.jsp");
         dispatcher.forward(req, resp);
 
     }
@@ -188,37 +193,162 @@ public class ProductServlet extends HttpServlet {
     }
 
 
-    private void updateProduct(HttpServletRequest request, HttpServletResponse response)
+    private void updateProduct(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String image = request.getParameter("image");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//        int id = Integer.parseInt(request.getParameter("id"));
+//        String name = request.getParameter("name");
+//        String image = request.getParameter("image");
+//        double price = Double.parseDouble(request.getParameter("price"));
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//
+//        int idCategory = Integer.parseInt(request.getParameter("category_id"));
+//        Product product = new Product(id, name, image, price, quantity, idCategory);
+//        productDAO.updateProduct(product);
+////        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/edit_product.jsp");
+////          dispatcher.forward(request, response);
+//        response.sendRedirect("/product");
 
-        int idCategory = Integer.parseInt(request.getParameter("category_id"));
-        Product product = new Product(id, name, image, price, quantity, idCategory);
-        productDAO.updateProduct(product);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/edit_product.jsp");
-//          dispatcher.forward(request, response);
-        response.sendRedirect("/product");
+        Product product;
+
+//         String name = req.getParameter("name").trim();
+//        String image = req.getParameter("image").trim();
+//     String price = (req.getParameter("price").trim());
+//       String quantity = (req.getParameter("quantity").trim());
+//        String category_id = String.valueOf(Integer.parseInt(req.getParameter("category_id").trim()));
+
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/products/edit_product.jsp");
+        int id = (Integer.parseInt(req.getParameter("id").trim()));
+        String name = req.getParameter("name").trim();
+        String image = req.getParameter("image").trim();
+        String price = req.getParameter("price").trim();
+        String quantity = req.getParameter("quantity").trim();
+        int category_id = Integer.parseInt(req.getParameter("category_id").trim());
+
+        List<String> errors = new ArrayList<>();
+        boolean isPrice = ValidateUtils.isPriceValid(String.valueOf(price));
+        boolean isQuantity = ValidateUtils.isQuantityValid(String.valueOf(quantity));
+        product = new Product(id, name, image, price, quantity, category_id);
+
+        if (name.isEmpty() ||
+                image.isEmpty() ||
+                price.isEmpty() ||
+                quantity.isEmpty()) {
+            errors.add("Vui lòng nhập đủ thông tin!");
+        }
+        if (name.isEmpty()) {
+            errors.add("Tên sản phẩm không được để trống!");
+        }
+        if (image.isEmpty()) {
+            errors.add("URL image không được để trống!");
+        }
+        if (price.isEmpty()) {
+            errors.add("Giá không được để trống!");
+        }
+        if (quantity.isEmpty()) {
+            errors.add("Số lượng không được  trống!");
+        }
+        if (!isQuantity) {
+            errors.add("Số lượng không đúng định dạng!");
+        }
+        if (!isPrice) {
+            errors.add("Giá không đúng định dạng!");
+
+        } else if (errors.size() == 0) {
+            product = new Product(id, name, image, price, quantity, category_id);
+            boolean success = false;
+            success = productDAO.updateProduct(product);
+            if (success) {
+                req.setAttribute("success", true);
+            } else {
+                req.setAttribute("errors", true);
+                errors.add("Dữ liệu không đúng, vui lòng kiểm tra lại!");
+            }
+        }
+        if (errors.size() > 0) {
+            req.setAttribute("errors", errors);
+            req.setAttribute("product", product);
+        }
+        dispatcher.forward(req, resp);
     }
 
-    private void insertProduct(HttpServletRequest request, HttpServletResponse response)
+    private void insertProduct(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
 
 
-        String name = request.getParameter("name");
-        String image = request.getParameter("image");
-       double price = Double.parseDouble(request.getParameter("price"));
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//        String name = request.getParameter("name");
+//        String image = request.getParameter("image");
+//       double price = Double.parseDouble(request.getParameter("price"));
+//        int quantity = Integer.parseInt(request.getParameter("quantity"));
+//
+//        int category_id = Integer.parseInt(request.getParameter("category_id"));
+//
+//        Product product = new Product(name, image, price, quantity, category_id);
+//        productDAO.insertProduct(product);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/products/create_product.jsp");
+//        dispatcher.forward(request, response);
 
-        int category_id = Integer.parseInt(request.getParameter("category_id"));
+      Product product;
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/products/create_product.jsp");
+        String name = req.getParameter("name").trim();
+        String image = req.getParameter("image").trim();
+     String price = (req.getParameter("price").trim());
+       String quantity = (req.getParameter("quantity").trim());
+        String category_id = String.valueOf(Integer.parseInt(req.getParameter("category_id").trim()));
 
-        Product product = new Product(name, image, price, quantity, category_id);
-        productDAO.insertProduct(product);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/products/create_product.jsp");
-        dispatcher.forward(request, response);
+        List<String> errors = new ArrayList<>();
+
+        boolean isPrice = ValidateUtils.isPriceValid(String.valueOf(price));
+        boolean isQuantity = ValidateUtils.isQuantityValid(String.valueOf(quantity));
+
+       product = new Product(name, image, String.valueOf(price), quantity, category_id);
+
+        if (name.isEmpty() ||
+                image.isEmpty() ||
+                price.isEmpty() ||
+                quantity.isEmpty() ||
+                category_id.isEmpty()) {
+            errors.add("Vui lòng nhâp đầy đủ thông tin!");
+        }
+        if (name.isEmpty()) {
+            errors.add("Tên sản phẩm không được để trống!");
+        }
+        if (image.isEmpty()) {
+            errors.add("URL ảnh không được để trống!");
+        }
+        if (price.isEmpty()) {
+            errors.add("Giá không được để trống!");
+        }
+        if (!isPrice) {
+            errors.add("Giá không đúng định dạng!");
+        }
+        if (quantity.isEmpty()) {
+            errors.add("Số lượng không được để trống!");
+        }
+        if (!isQuantity) {
+            errors.add("Số lượng không đúng định dạng!");
+        }
+
+        else if (errors.size() == 0) {
+            product = new Product(name, image, price, quantity, category_id);
+            boolean success = false;
+            success = productDAO.insertProduct(product);
+
+            if (success) {
+                req.setAttribute("success", true);
+            } else {
+                req.setAttribute("errors", true);
+                errors.add("Dữ liệu không hợp lệ, vui lòng kiểm tra lại! ");
+            }
+        }
+        if (errors.size() > 0) {
+            req.setAttribute("errors", errors);
+            req.setAttribute("product", product);
+        }
+        dispatcher.forward(req, resp);
+    }
+}
+
+
 //        response.sendRedirect("/user_manager");
 
 //        Product product = new Product();
@@ -304,6 +434,3 @@ public class ProductServlet extends HttpServlet {
 //            request.getRequestDispatcher("/WEB-INF/view/create_product.jsp").forward(request, response);
 //        } catch (Exception ex) {
 //        }
-
-    }
-}

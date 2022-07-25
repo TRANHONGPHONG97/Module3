@@ -2,7 +2,7 @@ package com.example.case_study_module3.dao;
 
 
 import com.example.case_study_module3.model.Product;
-import com.example.case_study_module3.model.User;
+import com.example.case_study_module3.utils.MySQLConnUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,10 +41,11 @@ public class ProductDAO implements IProductDAO {
     public ProductDAO() {
     }
 
-    public void insertProduct(Product product) throws SQLException {
-        System.out.println(INSERT_PRODUCT_SQL);
+    public boolean insertProduct(Product product) throws SQLException {
+//        System.out.println(INSERT_PRODUCT_SQL);
+        boolean success = false;
 
-        try (Connection connection = getConnection();
+        try (Connection connection = MySQLConnUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PRODUCT_SQL)) {
             System.out.println(preparedStatement);
             preparedStatement.setString(1, product.getName());
@@ -53,9 +54,11 @@ public class ProductDAO implements IProductDAO {
             preparedStatement.setInt(4, product.getQuantity());
             preparedStatement.setInt(5, product.getCategory_id());
             preparedStatement.executeUpdate();
+            success =true;
         } catch (SQLException e) {
             printSQLException(e);
         }
+        return success;
     }
 
     public Product selectProduct(int id) {
@@ -120,9 +123,9 @@ public class ProductDAO implements IProductDAO {
     }
 
     public boolean updateProduct(Product product) throws SQLException {
-        boolean rowUpdated;
+        boolean success = false;
 
-        try (Connection connection = getConnection();
+        try (Connection connection = MySQLConnUtils.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_PRODUCT_SQL);) {
             System.out.println(statement);
             statement.setString(1, product.getName());
@@ -131,11 +134,14 @@ public class ProductDAO implements IProductDAO {
             statement.setInt(4, product.getQuantity());
             statement.setInt(5, product.getCategory_id());
             statement.setInt(6, product.getId());
-            rowUpdated = statement.executeUpdate() > 0;
+            statement.executeUpdate();
+            success = true;
+        } catch (SQLException e) {
+            MySQLConnUtils.printSQLException(e);
         }
-        return rowUpdated;
+        return success;
     }
-    public List<Product> selectUsersPaging(int offset, int noOfRecords) {
+    public List<Product> selectProductsPaging(int offset, int noOfRecords) {
         String query = "select SQL_CALC_FOUND_ROWS * from product limit " + offset + ", " + noOfRecords;
         List<Product> list = new ArrayList<Product>();
         Product product = null;
@@ -154,6 +160,7 @@ public class ProductDAO implements IProductDAO {
                 product.setQuantity(rs.getInt("quantity"));
                 product.setCategory_id(rs.getInt("category_id"));
                 list.add(product);
+
             }
             rs.close();
 

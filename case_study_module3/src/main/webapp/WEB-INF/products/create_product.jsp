@@ -11,18 +11,18 @@
     <link rel="stylesheet" href="../../assetss/list.css">
     <link rel="stylesheet" href="../../assetss/create.css">
     <link rel="stylesheet" href="../../assetss/transfer.css">
-    <title>Document</title>
+    <title>Create Product</title>
 </head>
 <body>
 <div class="container">
     <div class="row header">
         <div class="col-sm-6 header--left">
-            <h1>Create customer</h1>
+            <h1>Create New Product</h1>
         </div>
         <div class="col-sm-6 header--right list--right">
-            <a href="user_manager">
+            <a href="product">
                 <i class="fa-solid fa-list"></i>
-                <span>List of customers</span>
+                <span>PRODUCT LIST</span>
             </a>
         </div>
     </div>
@@ -37,15 +37,13 @@
                         <label >PRODUCT NAME</label>
                         <input type="text" name="name" id="name" size="45" value ="${product.getName() }"/>
                         <label >IMAGE</label>
-                        <input type="image" name="image" id="password" size="45" value ="${product.getImage() }"/>
+                        <input type="text" name="image" value="${product.getImage()}" size="45"/>
                         <label>PRICE</label>
-                        <input type="text" name="price" id="phone" size="45" value ="${product.getPrice() }"/>
-
+                        <input type="number" name="price" id="phone" size="45" value ="${product.getPrice() }"/>
                     </div>
-
                     <div class="col-sm-6">
                         <label>QUANTITY</label>
-                        <input type="text" name="quantity" id="email" size="45" value ="${product.getQuantity() }"/>
+                        <input type="number" name="quantity" id="email" size="45" value ="${product.getQuantity() }"/>
                         <label>CATEGORY</label>
                         <div class="col-md-1">
                             <select name="category_id">
@@ -58,9 +56,23 @@
                 </div>
                 <button type="submit">
                     <i class="fa-solid fa-plus"></i>
-                    Create customer
+                    Create
                 </button>
             </form>
+        </div>
+        <div class="footer" style="margin-left: 200px">
+            <c:if test="${requestScope['success'] == true}">
+                <ul class="success">
+                    <li>Thêm mới thành công</li>
+                </ul>
+            </c:if>
+            <c:if test="${!requestScope['errors'].isEmpty()}">
+                <ul class="error">
+                    <c:forEach items="${requestScope['errors']}" var="item">
+                        <li>${item}</li>
+                    </c:forEach>
+                </ul>
+            </c:if>
         </div>
     </div>
 </div>

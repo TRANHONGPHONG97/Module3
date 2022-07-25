@@ -81,6 +81,7 @@
     transition: .5s;
 }
 #errors {
+    position: relative;
+    left: 400px;
     text-align: center !important;
-    font-weight: bold !important;
 }

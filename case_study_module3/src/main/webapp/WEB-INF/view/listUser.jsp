@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>USER MANAGER</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,27 +40,27 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/images/hay.jpg" width="50px"
+    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="/images/anhbo.jpg" width="50px"
                                         alt="User Image">
     </div>
     <hr>
     <ul class="app-menu">
 
-        <li><a class="app-menu__item active" href="/user_manager"><i class='app-menu__icon bx bx-id-card'></i>
-            <span class="app-menu__label">Quản lý nhân viên</span></a></li>
+        <li><a class="app-menu__item" href="/user_manager"><i class='app-menu__icon bx bx-id-card'></i>
+            <span class="app-menu__label">User Management</span></a></li>
 
         <li><a class="app-menu__item" href="/product"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span
-                class="app-menu__label">Quản lý sản phẩm</span></a>
+                class="app-menu__label">Product Management</span></a>
         </li>
         <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-task'></i><span
-                class="app-menu__label">Quản lý đơn hàng</span></a></li>
-
+                class="app-menu__label">Order management</span></a></li>
+        <li><a><img src="" alt="" style="height: 380px; width: 230px"></a></li>
     </ul>
 </aside>
 <main class="app-content">
-    <div class="app-title">
+    <div class= "col-sm-12" style="background-color: chocolate">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Danh sách nhân viên</b></a></li>
+            <li class="breadcrumb-item"><h3 ><b >CHÀO MỪNG BẠN ĐẾN VỚI CỬA HÀNG TRANG TRÍ NỘI THẤT BOF BEE - GIÁ RẺ, CHẤT LƯỢNG & UY TÍN</b></h3 ></li>
         </ul>
         <div id="clock"></div>
     </div>
@@ -73,26 +73,19 @@
                     <div class="row element-button">
                         <div class="col-sm-2">
 
-                            <a class="btn btn-add btn-sm" href="user_manager?action=create" title="Thêm"><i
+                            <a style="font-size: larger" class="btn btn-add btn-sm" href="user_manager?action=create" title="Thêm"><i
                                     class="fas fa-plus"></i>
-                                Tạo mới nhân viên</a>
+                                Create new user</a>
                         </div>
-                        <div class="col-sm-2">
-                            <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
-                                    class="fas fa-trash-alt"></i> Xóa tất cả </a>
-                        </div>
-                        <div>
-                            <form action="user_manager">
-                                Search: <input type="text" hint="search" value="${requestScope.q}" name="q"> Filter:
+                        <div class="col-sm-4"></div>
+                        <div class="formm col-sm-5" style="
+                                           border: 1px solid black; border-radius: 3px; background-color: limegreen;
+                                            font-weight: bold">
+                            <form action="user_manager" style="padding: 5px;">
+                                Search: <input placeholder="search" type="text" hint="search" value="${requestScope.q}" name="q"> Filter:
                                 <select name="idrole" id="">
-                                    <%--            <option value="1">Việt Nam</option>--%>
-                                    <%--            <option value="2">Pháp</option>--%>
-                                    <%--            <option value="3">USA</option>--%>
-                                    <%--            <option value="4">China</option>--%>
                                     <option value="-1">All</option>
-                                    --%>
                                     <c:forEach items="${applicationScope.listRole}" var="role">
-
                                         <c:choose>
                                             <c:when test="${role.getId() == requestScope.idrole}">
                                                 <option selected value="${role.getId()}">${role.getName()}</option>
@@ -102,25 +95,23 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
-
                                 </select>
-                                <button type="get">Submit:</button>
+                                <button  class="btn btn-add btn-sm" type="get">Submit</button>
                             </form>
                         </div>
                     </div>
-                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0"
+                    <table style=" text-align: center" class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0"
                            border="0"
                            id="sampleTable">
-                        <thead>
-                        <tr>
-<%--                            <th width="10"><input type="checkbox" id="all"></th>--%>
-                            <th>ID User</th>
-                            <th>User Name</th>
-                            <th>Password</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
+                        <thead  >
+                        <tr >
+                            <th>#</th>
+                            <th>USER NAME</th>
+                            <th>PASSWORD</th>
+                            <th>PHONE</th>
+                            <th>EMAIL</th>
+                            <th>ROLE</th>
+                            <th>ACTION</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -143,30 +134,21 @@
                                 </td>
                                 <td>
                                     <a href="/user_manager?action=edit&id=${user.getIdUser()}"
-                                       class="fas fa-edit">Edit </a>
+                                       class="fas fa-edit"> Update </a>
                                     <a onclick="showMessage(${user.getIdUser()})"
-                                       class="fas fa-trash-alt">Delete</a>
+                                       class="fas fa-trash-alt"> Remove</a>
                                 </td>
 
-
-                                    <%--                            <td class="table-td-center">--%>
-                                    <%--                                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"--%>
-                                    <%--                                        onclick="myFunction(this)"><i class="fas fa-trash-alt"></i>--%>
-                                    <%--                                </button>--%>
-                                    <%--                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"--%>
-                                    <%--                                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>--%>
-                                    <%--                                </button>--%>
-                                    <%--                            </td>--%>
                             </tr>
                         </c:forEach>
                         </tbody>
 
                     </table>
-                    <nav aria-label="Page navigation example">
+                    <nav class= col-sm-12 style="display: flex; justify-content: center" aria-label="Page navigation example">
                         <ul class="pagination">
                             <c:if test="${requestScope.currentPage != 1}">
                                 <li class="page-item ">
-                                    <a class="page-link " href="user_manager?page=${requestScope.currentPage - 1}">Previous</a>
+                                    <a class="page-link " href="user_manager?page=${requestScope.currentPage - 1}" style="background-color: aquamarine">Previous</a>
                                 </li>
                             </c:if>
 
@@ -190,7 +172,7 @@
 
                             <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                                 <li class="page-item ">
-                                    <a class="page-link" href="user_manager?page=${requestScope.currentPage + 1}">Next</a>
+                                    <a class="page-link" href="user_manager?page=${requestScope.currentPage + 1}" style="background-color: aquamarine">Next</a>
                                 </li>
                             </c:if>
                         </ul>
@@ -200,77 +182,6 @@
         </div>
     </div>
 </main>
-
-<!--
-MODAL
--->
-<div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
-     data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group  col-md-12">
-              <span class="thong-tin-thanh-toan">
-                <h5>Chỉnh sửa thông tin nhân viên cơ bản</h5>
-              </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label class="control-label">ID nhân viên</label>
-                        <input class="form-control" type="text" required value="#CD2187" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label">Họ và tên</label>
-                        <input class="form-control" type="text" required value="Võ Trường">
-                    </div>
-                    <div class="form-group  col-md-6">
-                        <label class="control-label">Số điện thoại</label>
-                        <input class="form-control" type="number" required value="09267312388">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label">Địa chỉ email</label>
-                        <input class="form-control" type="text" required value="truong.vd2000@gmail.com">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="control-label">Ngày sinh</label>
-                        <input class="form-control" type="date" value="15/03/2000">
-                    </div>
-                    <div class="form-group  col-md-6">
-                        <label for="exampleSelect1" class="control-label">Chức vụ</label>
-                        <select class="form-control" id="exampleSelect1">
-                            <option>Bán hàng</option>
-                            <option>Tư vấn</option>
-                            <option>Dịch vụ</option>
-                            <option>Thu Ngân</option>
-                            <option>Quản kho</option>
-                            <option>Bảo trì</option>
-                            <option>Kiểm hàng</option>
-                            <option>Bảo vệ</option>
-                            <option>Tạp vụ</option>
-                        </select>
-                    </div>
-                </div>
-                <BR>
-                <a href="#" style="    float: right;
-        font-weight: 600;
-        color: #ea0000;">Chỉnh sửa nâng cao</a>
-                <BR>
-                <BR>
-                <button class="btn btn-save" type="button">Lưu lại</button>
-                <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-                <BR>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-<!--
-MODAL
--->
 
 <!-- Essential javascripts for application to work-->
 <script src="../../assets/js/jquery-3.2.1.min.js"></script>
@@ -288,12 +199,7 @@ MODAL
 <script type="text/javascript" src="../../assets/js/plugins/dataTables.bootstrap.min.js"></script>
 <script>
     function showMessage(id) {
-        // var delete = window.confirm("Ban muon xoa khong?")
-        // if(delete ===true ){
-        //     window.location.href ="/user_manager?action=delete?id=" +id;
-        // }
-
-        if (confirm("ban xoa") === true){
+        if (confirm("Bạn có muốn xóa người dùng này không?") === true){
             window.location.href ="/user_manager?action=delete&id=" +id;
         }
     }

@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 
 public class User {
     private int idUser;
@@ -33,6 +34,22 @@ public class User {
         this.email = email;
         this.idrole = idrole;
     }
+
+    public User(String userName, String password, String phone, String email, String idrole) {
+        this.userName = userName;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+        this.idrole = Integer.parseInt(idrole);
+    }
+
+    public User(String userName, String password, String phone, String email) {
+        this.userName = userName;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+    }
+
 
     public int getIdUser() {
         return idUser;
