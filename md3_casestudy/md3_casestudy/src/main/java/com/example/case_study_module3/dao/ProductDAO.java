@@ -42,7 +42,6 @@ public class ProductDAO implements IProductDAO {
     }
 
     public boolean insertProduct(Product product) throws SQLException {
-//        System.out.println(INSERT_PRODUCT_SQL);
         boolean success = false;
 
         try (Connection connection = MySQLConnUtils.getConnection();

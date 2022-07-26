@@ -32,8 +32,7 @@
 
 
         <!-- User Menu-->
-        <li><a class="app-nav__item" href="/index.html"><i class='bx bx-log-out bx-rotate-180'></i> </a>
-
+        <li><a class="app-nav__item" href="/logout">Logout <i class='bx bx-log-out bx-rotate-180'></i> </a>
         </li>
     </ul>
 </header>
@@ -45,10 +44,10 @@
     </div>
     <hr>
     <ul class="app-menu">
-
+    <c:if test="${acc.getIdrole() == 1}">
         <li><a class="app-menu__item" href="/user_manager"><i class='app-menu__icon bx bx-id-card'></i>
             <span class="app-menu__label">User Management</span></a></li>
-
+    </c:if>
         <li><a class="app-menu__item" href="/product"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span
                 class="app-menu__label">Product Management</span></a>
         </li>
@@ -73,7 +72,7 @@
                     <div class="row element-button">
                         <div class="col-sm-2">
 
-                            <a style="font-size: larger" class="btn btn-add btn-sm" href="user_manager?action=create" title="Thêm"><i
+                            <a style="font-size: larger" class="btn btn-outline-success" href="user_manager?action=create" title="Thêm"><i
                                     class="fas fa-plus"></i>
                                 Create new user</a>
                         </div>
@@ -136,9 +135,9 @@
                                 </td>
                                 <td>
                                     <a href="/user_manager?action=edit&id=${user.getIdUser()}"
-                                       class="fas fa-edit"> Update </a>
+                                       class="fas fa-edit"> Edit </a>
                                     <a onclick="showMessage(${user.getIdUser()})"
-                                       class="fas fa-trash-alt"> Remove</a>
+                                       class="fas fa-trash-alt"> Delete</a>
                                 </td>
 
                             </tr>

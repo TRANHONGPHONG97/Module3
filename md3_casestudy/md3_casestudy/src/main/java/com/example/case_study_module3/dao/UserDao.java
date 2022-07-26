@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao implements IUserDao {
-    public static  String USER_EXIST_BY_EMAIL = "" +
+    public static String USER_EXIST_BY_EMAIL = "" +
             "SELECT COUNT(*) AS COUNT " +
             "FROM user AS u " +
             "WHERE u.email = ?;";
-    public static  String USER_EXIST_BY_USER = "" +
+    public static String USER_EXIST_BY_USER = "" +
             "SELECT COUNT(*) AS COUNT " +
             "FROM user AS u " +
             "WHERE u.userName = ?;";
-    public static  String USER_EXIST_BY_PHONE = "" +
+    public static String USER_EXIST_BY_PHONE = "" +
             "SELECT COUNT(*) AS COUNT " +
             "FROM user AS u " +
             "WHERE u.phone = ?;";
@@ -182,7 +182,7 @@ public class UserDao implements IUserDao {
 
     @Override
     public boolean insertUser(User user) throws SQLException {
-        boolean success =false;
+        boolean success = false;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
             preparedStatement.setString(1, user.getUserName());
@@ -198,6 +198,7 @@ public class UserDao implements IUserDao {
         }
         return success;
     }
+
     @Override
     public boolean updateUser(User user) throws SQLException {
         boolean success = false;
@@ -209,9 +210,8 @@ public class UserDao implements IUserDao {
             statement.setString(4, user.getEmail());
             statement.setInt(5, user.getIdrole());
             statement.setInt(6, user.getIdUser());
-           success = statement.executeUpdate() >0;
-        }
-        catch (SQLException e) {
+            success = statement.executeUpdate() > 0;
+        } catch (SQLException e) {
             MySQLConnUtils.printSQLException(e);
         }
         return success;
@@ -240,8 +240,6 @@ public class UserDao implements IUserDao {
     }
 
 
-
-
     @Override
     public boolean deleteUser(int id) throws SQLException {
         boolean flag;
@@ -250,9 +248,10 @@ public class UserDao implements IUserDao {
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE  FROM user WHERE idUser =?;");
         preparedStatement.setInt(1, id);
         flag = preparedStatement.executeUpdate() > 0;
-            connection.close();
-            return flag;
+        connection.close();
+        return flag;
     }
+
     public User selectUserByEmail(String emails) {
         User user = null;
         try (Connection connection = getConnection();
@@ -265,9 +264,9 @@ public class UserDao implements IUserDao {
                 String userName = rs.getString("userName");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                String phone= rs.getString("phone");
+                String phone = rs.getString("phone");
                 int idrole = rs.getInt("idrole");
-                user = new User(idUser, userName,password, phone, email,   idrole);
+                user = new User(idUser, userName, password, phone, email, idrole);
                 return user;
             }
             return null;
@@ -322,7 +321,6 @@ public class UserDao implements IUserDao {
 //        }}
 
 
-
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
@@ -353,12 +351,12 @@ public class UserDao implements IUserDao {
                     exist = true;
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             MySQLConnUtils.printSQLException(e);
         }
         return exist;
     }
+
     public boolean existsByUser(String userName) {
         boolean exist = false;
 
@@ -373,12 +371,12 @@ public class UserDao implements IUserDao {
                     exist = true;
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             MySQLConnUtils.printSQLException(e);
         }
         return exist;
     }
+
     public boolean existsByPhone(String phone) {
         boolean exist = false;
 
@@ -393,12 +391,12 @@ public class UserDao implements IUserDao {
                     exist = true;
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             MySQLConnUtils.printSQLException(e);
         }
         return exist;
     }
+
     public boolean existByPassWord1(String username) {
         boolean exist = false;
         try {
@@ -418,5 +416,22 @@ public class UserDao implements IUserDao {
             e.printStackTrace();
         }
         return exist;
+    }
+
+    public User login(String userName, String pass) throws SQLException {
+        Connection conn = getConnection();
+        String query = "select * from user where userName = ? and password = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, userName);
+        ps.setString(2, pass);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("idUser");
+            String phone = rs.getString("phone");
+            String email = rs.getString("email");
+            int idRole = Integer.parseInt(rs.getString("idrole"));
+            return new User(id, userName, pass, phone, email, idRole);
+        }
+        return null;
     }
 }

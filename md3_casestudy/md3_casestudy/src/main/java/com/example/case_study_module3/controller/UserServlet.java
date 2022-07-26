@@ -3,7 +3,6 @@ package com.example.case_study_module3.controller;
 import com.example.case_study_module3.dao.IRoleDao;
 import com.example.case_study_module3.dao.RoleDao;
 import com.example.case_study_module3.dao.UserDao;
-import com.example.case_study_module3.model.Role;
 import com.example.case_study_module3.model.User;
 import com.example.case_study_module3.utils.ValidateUtils;
 
@@ -14,14 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.function.BiConsumer;
+
 
 @WebServlet(name = "user", urlPatterns = "/user_manager")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
@@ -63,7 +58,6 @@ public class UserServlet extends HttpServlet {
                     showDeleteForm(req, resp);
                     break;
                 default:
-//                    listUser(req, resp);
                     listUserPaging(req, resp);
                     break;
             }
@@ -71,7 +65,6 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -121,7 +114,6 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
     private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         userDao.deleteUser(id);
@@ -130,16 +122,12 @@ public class UserServlet extends HttpServlet {
         response.sendRedirect("/user_manager");
     }
 
-
     private void showCreateForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         User user = new User();
         req.setAttribute("user", user);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/create.jsp");
         dispatcher.forward(req, resp);
-
     }
-
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         User existingUser = userDao.selectUser(id);
@@ -151,32 +139,12 @@ public class UserServlet extends HttpServlet {
     private void listUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> list = userDao.selectAllUsers();
         req.setAttribute("list", list);
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/listUser.jsp");
         dispatcher.forward(req, resp);
-
     }
-
 
     private void updateUser(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        String name = request.getParameter("userName");
-//        String password = request.getParameter("password");
-//        String phone = request.getParameter("phone");
-//        String email = request.getParameter("email");
-//
-//        int idRole = Integer.parseInt(request.getParameter("idrole"));
-//        User user = new User(id, name, password, phone, email, idRole);
-//        userDao.updateUser(user);
-////        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/edit_product.jsp");
-////          dispatcher.forward(request, response);
-//        response.sendRedirect("/user_manager");
-//        User user;
-//        resp.sendRedirect("/user_manager");
-
-//        RequestDispatcher dispatcher = req.getRequestDispatcher("/user_manager");
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/edit.jsp");
         int id = Integer.parseInt(req.getParameter("id"));
         String userName = req.getParameter("userName");
@@ -210,7 +178,6 @@ public class UserServlet extends HttpServlet {
         if (!isPassword) {
             errors.add("Password không đúng định dạng! (Phải bắt đầu bằng chữ in hoa, chỉ chứa chữ và số, tối thiểu 8-24 ký tự)");
         }
-
         if (phone.isEmpty()) {
             errors.add("Phone không được để trống!");
         }
@@ -233,7 +200,7 @@ public class UserServlet extends HttpServlet {
         if (userDao.existsByPhone(phone)) {
             errors.add("Phone này đã tồn tại!");
 
-        }else if (errors.size() == 0) {
+        } else if (errors.size() == 0) {
             user = new User(id, userName, password, phone, email, idRole);
             boolean success = false;
             success = userDao.updateUser(user);
@@ -250,7 +217,6 @@ public class UserServlet extends HttpServlet {
         }
         dispatcher.forward(req, resp);
     }
-
 
     private void insertUser(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
@@ -355,7 +321,6 @@ public class UserServlet extends HttpServlet {
 //            } catch (Exception ex) {
 //            }
 //        }
-
 
         User user;
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/view/create.jsp");

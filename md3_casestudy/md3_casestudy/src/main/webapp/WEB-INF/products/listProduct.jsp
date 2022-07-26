@@ -33,9 +33,7 @@
 
 
         <!-- User Menu-->
-        <li><a class="app-nav__item" href="/index.html"><i class='bx bx-log-out bx-rotate-180'></i> </a>
-
-        </li>
+        <li><a class="app-nav__item" href="/logout">Logout <i class='bx bx-log-out bx-rotate-180'></i> </a></li>
     </ul>
 </header>
 <!-- Sidebar menu-->
@@ -46,10 +44,10 @@
     </div>
     <hr>
     <ul class="app-menu">
-
+        <c:if test="${acc.getIdrole() == 1}">
         <li><a class="app-menu__item" href="/user_manager"><i class='app-menu__icon bx bx-id-card'></i>
             <span class="app-menu__label">User Management</span></a></li>
-
+</c:if>
         <li><a class="app-menu__item" href="/product"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span
                 class="app-menu__label">Product Management</span></a>
         </li>
@@ -74,7 +72,7 @@
                     <div class="row element-button">
                         <div class="col-sm-2">
 
-                            <a style="font-size: larger" class="btn btn-add btn-sm" href="/product?action=create" title="Thêm"><i
+                            <a style="font-size: larger" class="btn btn-outline-success" href="/product?action=create" title="Thêm"><i
                                     class="fas fa-plus"></i>
                                 Create New Product</a>
                         </div>
@@ -101,7 +99,7 @@
                                     </c:forEach>
 
                                 </select>
-                                <button type="get" class="btn btn-primary"><span class="bi-submit"></span> Submit</button>
+                                <button type="get" class="btn btn-primary"><span class="fa fa-search"></span>Submit</button>
                             </form>
                         </div>
                     </div>
@@ -126,7 +124,7 @@
                                 <td><c:out value="${product.getName()}"/></td>
                                 <td><img src="${product.getImage()}"  style="width: 100px; height: 100px"></td>
                                 <td><fmt:formatNumber value="${product.getPrice()}" type="currency" pattern="#,### ₫"/></td>
-<%--                                <td><c:out value="${product.getPrice()}"/></td>--%>
+
                                 <td><c:out value="${product.getQuantity()}"/></td>
 
                                 <td>
@@ -142,9 +140,9 @@
                                 </td>
                                 <td>
                                     <a href="/product?action=edit&id=${product.getId()}"
-                                       class="fas fa-edit"> Update </a>
+                                       class="fas fa-edit"> Edit </a>
                                     <a onclick="showMessage(${product.getId()})"
-                                       class="fas fa-trash-alt"> Remove</a>
+                                       class="fas fa-trash-alt">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>

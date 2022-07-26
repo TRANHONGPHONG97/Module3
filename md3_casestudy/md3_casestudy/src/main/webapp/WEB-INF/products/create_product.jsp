@@ -23,12 +23,6 @@
             <h1>Create New Product</h1>
         </div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-4 header--right list--right">
-            <a href="product">
-                <i class="fa-solid fa-list"></i>
-                <span>PRODUCT LIST</span>
-            </a>
-        </div>
     </div>
     <div class="row">
         <div class="col-sm-12 padding-0">
@@ -41,9 +35,9 @@
                         <label>PRODUCT NAME</label><input type="text" name="name" id="name" size="45"
                                                           value="${product.getName() }"/>
                         <label>IMAGE</label><input type="text" name="image" value="${product.getImage()}" size="45"/>
-                        <label>PRICE</label><input type="number" name="price" id="phone" size="45"
+                        <label>PRICE</label><input type="text" name="price" id="price" size="45"
                                                    value="${product.getPrice() }"/>
-                        <label>QUANTITY</label><input type="number" name="quantity" id="email" size="45"
+                        <label>QUANTITY</label><input type="number" name="quantity" id="quantity" size="45"
                                                       value="${product.getQuantity() }"/>
                         <label>CATEGORY</label>
                         <select name="category_id">
@@ -51,10 +45,17 @@
                                 <option value="${category.getId()}">${category.getName()}</option>
                             </c:forEach>
                         </select>
+                        <br>
+                        <br>
                     </div>
-                    <div class="col-sm-5"></div>
-                    <div class="col-sm-2"><input type="submit" class="btn btn-info" value="Create">
+                    <div class="col-sm-1"><input type="submit" class="btn btn-outline-success "
+                                                 style="color: black; font-weight: bold" title="Thêm" value="Create">
                         <div class="col-sm-5"></div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="/product" title="Quay lại" class="btn btn-outline-info" style="color: black; font-weight: bold">
+                            <i class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ></i> Back
+                        </a>
                     </div>
                 </div>
 
@@ -63,13 +64,13 @@
         <div class="footer" style="margin-left: 200px">
             <c:if test="${requestScope['success'] == true}">
                 <ul class="success">
-                    <li>Thêm mới thành công</li>
+                    <li style="color: darkgreen; font-weight: bold">Thêm mới thành công</li>
                 </ul>
             </c:if>
             <c:if test="${!requestScope['errors'].isEmpty()}">
                 <ul class="error">
                     <c:forEach items="${requestScope['errors']}" var="item">
-                        <li>${item}</li>
+                        <li style="color: red; font-weight: bold">${item}</li>
                     </c:forEach>
                 </ul>
             </c:if>

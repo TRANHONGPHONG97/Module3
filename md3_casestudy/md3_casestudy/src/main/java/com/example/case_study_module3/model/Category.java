@@ -2,48 +2,47 @@ package com.example.case_study_module3.model;
 
 public class Category {
 
-	protected int id;
-	protected String name; 
-	
-	
-	public Category() {}
+    protected int id;
+    protected String name;
 
 
-	public Category(int id, String name ) {
-		super();
-		this.id = id;
-		this.name = name;
-		 
-	}
+    public Category() {
+    }
 
 
-	public Category(String name ) {
-		super();
-		this.name = name;
-		 
-	}
+    public Category(int id, String name) {
+        super();
+        this.id = id;
+        this.name = name;
+
+    }
 
 
-	public int getId() {
-		return id;
-	}
+    public Category(String name) {
+        super();
+        this.name = name;
+
+    }
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
 
-	public String getName() {
-		return name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
 
-	 
-	
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 }

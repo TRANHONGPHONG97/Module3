@@ -1,36 +1,44 @@
 package com.example.case_study_module3.controller;
 
+import com.example.case_study_module3.dao.UserDao;
+import com.example.case_study_module3.model.User;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
+@WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/login.jsp");
+        dispatcher.forward(req,resp);
+    }
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDao userDao = new UserDao();
+        String userName = req.getParameter("userName");
+        String pass = req.getParameter("pass");
+        try {
+            User account = userDao.login(userName,pass);
 
-            if (username.equals("su") && password.equals("123")) {
-                session.setAttribute("quyen", "su");
-                response.sendRedirect("wellcome.jsp");
-            } else if (username.equals("ad") && password.equals("123")) {
-                session.setAttribute("quyen", "ad");
-                response.sendRedirect("wellcome.jsp");
-            } else if (username.equals("em") && password.equals("123")) {
-                session.setAttribute("quyen", "em");
-                response.sendRedirect("wellcome.jsp");
+            if (account == null){
+                req.setAttribute("message", "Wrong account, please re-enter!");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("/login.jsp");
+                dispatcher.forward(req,resp);
             } else {
-                request.setAttribute("message", "Tai khoan k hop le!!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                HttpSession session = req.getSession();
+                session.setAttribute("acc",account);
+                resp.sendRedirect("/product");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

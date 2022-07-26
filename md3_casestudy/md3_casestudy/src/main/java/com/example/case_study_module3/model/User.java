@@ -68,6 +68,7 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     @NotEmpty
     @Pattern(regexp = "^([A-Z][a-z0-9]{8,24})", message = "Format password not right")
     public String getPassword() {
@@ -77,6 +78,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
     @NotEmpty
     @Pattern(regexp = "((84|0[1|2|3|4|5|6|7|8|9])+([0-9]{8})\\b)", message = "Format phone not right")
     public String getPhone() {
@@ -86,6 +88,7 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     @NotEmpty
     @Email(message = "Email format not right")
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$", message = "Format mail not right")

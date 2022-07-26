@@ -14,27 +14,21 @@
     <link rel="stylesheet" href="../../assetss/edit.css">
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <title>Update User</title>
+    <title>Edit User</title>
 </head>
 <body>
 <div class="container">
     <div class="row header">
         <div class="col-sm-6 header--left">
-            <h1>Update Product </h1>
+            <h1>Edit Product </h1>
         </div>
         <div class="col-sm-4"></div>
-        <div class="col-sm-2 header--right list--right">
-            <a href="/product">
-                <i class="fa-solid fa-list"></i>
-                <span>PRODUCT LIST</span>
-            </a>
-        </div>
     </div>
     <div class="row">
         <div class="col-sm-12 padding-0">
             <form action="" method="post">
                 <c:if test="${requestScope.product != null}">
-                    <input type="hidden" name="id" value="<c:out value='${product.getId()}' />"/>
+                <input type="hidden" name="id" value="<c:out value='${product.getId()}' />"/>
                 </c:if>
 
                 <div class="row">
@@ -43,9 +37,9 @@
                                                                  value="<c:out value="${product.getName()}"/>">
                         <label for="">IMAGE</label><input type="text" id="image" name="image"
                                                           value="<c:out value="${product.getImage()}"/>">
-                        <label for="">PRICE</label><input type="text" id="price" name="price"
+                        <label for="">PRICE</label><input type="number" id="price" name="price"
                                                           value="<c:out value="${product.getPrice()}"/>">
-                        <label for="">QUANTITY</label><input type="text" id="quantity" name="quantity"
+                        <label for="">QUANTITY</label><input type="number" id="quantity" name="quantity"
                                                              value="<c:out value="${product.getQuantity()}"/>">
                         <label for="">CATEGORY</label>
                         <select name="category_id">
@@ -53,32 +47,38 @@
                                 <option value="${category.getId()}">${category.getName()}</option>
                             </c:forEach>
                         </select>
-
-                        <%--            <input type="text" id="category_id" name="category_id" value="<c:out value="${product.getCategory_id()}"/>">--%>
-                        <button type="submit">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            UPDATE
-                        </button>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="col-sm-1"><input type="submit" class="btn btn-outline-success "
+                                                 style="color: black; font-weight: bold" title="Cập nhật" value=Edit>
+                        <div class="col-sm-5"></div>
+                    </div>
+                    <div class="btn-group">
+                        <a href="/product" class="btn btn-outline-info" title="Quay lại" style="color: black; font-weight: bold">
+                            <i class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ></i> Back
+                        </a>
                     </div>
                 </div>
+        </div>
 
-            </form>
-        </div>
-        <div class="footer" style="margin-left: 200px">
-            <c:if test="${requestScope['success'] == true}">
-                <ul class="success">
-                    <li>Cập nhật thành công</li>
-                </ul>
-            </c:if>
-            <c:if test="${!requestScope['errors'].isEmpty()}">
-                <ul class="error">
-                    <c:forEach items="${requestScope['errors']}" var="item">
-                        <li>${item}</li>
-                    </c:forEach>
-                </ul>
-            </c:if>
-        </div>
+        </form>
     </div>
+    <div class="footer" style="margin-left: 200px">
+        <c:if test="${requestScope['success'] == true}">
+            <ul class="success">
+                <li style="color: darkgreen; font-weight: bold">Cập nhật thành công</li>
+            </ul>
+        </c:if>
+        <c:if test="${!requestScope['errors'].isEmpty()}">
+            <ul class="error">
+                <c:forEach items="${requestScope['errors']}" var="item">
+                    <li style="color: red; font-weight: bold">${item}</li>
+                </c:forEach>
+            </ul>
+        </c:if>
+    </div>
+</div>
 </div>
 </body>
 </html>
